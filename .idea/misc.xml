@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MyCuteList/app/src/main/res/layout/activity_main.xml" value="0.12771739130434784" />
+        <entry key="..\:/MyCuteList/app/src/main/res/drawable/ic_add.xml" value="0.2203125" />
+        <entry key="..\:/MyCuteList/app/src/main/res/layout/activity_main.xml" value="0.67" />
       </map>
     </option>
   </component>
