@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.MyCuteList" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple1</item>
-        <item name="colorPrimaryVariant">@color/pink1</item>
+        <item name="colorPrimary">#B558C5</item>
+        <item name="colorPrimaryVariant">#EC5287</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/yellow1</item>

@@ -3,4 +3,5 @@
     <string name="tarefas">Tarefas</string>
     <string name="nova_tarefa">Nova tarefa</string>
     <string name="passear_com_o_cachorro">Passear com o cachorro</string>
+    <string name="editar">editar</string>
 </resources>

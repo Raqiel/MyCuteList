@@ -1,9 +1,11 @@
 package com.example.mycutelist.ui
 
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import com.example.mycutelist.dataSource.TaskDataSource
 import com.example.mycutelist.databinding.ActivityMainBinding
@@ -26,6 +28,15 @@ class MainActivity : AppCompatActivity() {
         private fun insertListeners(){
             binding.fab.setOnClickListener {
                 startActivityForResult(Intent(this, AddTaskActivity::class.java), CREATE_NEW_TASK)
+
+            }
+
+            adapter.listenerEdit = {
+                Log.e(TAG, "listenerEdit:  $it " )
+
+            }
+            adapter.listenerDelete = {
+                Log.e(TAG, "listenerDelete:  $it " )
 
             }
         }
