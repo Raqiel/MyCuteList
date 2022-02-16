@@ -1,6 +1,7 @@
 package com.example.mycutelist.ui
 
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,9 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.tasks.adapter = adapter
+        updateList()
+
 
 
         insertListeners()
@@ -32,7 +36,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             adapter.listenerEdit = {
-                Log.e(TAG, "listenerEdit:  $it " )
+               val intent = Intent (this, AddTaskActivity::class.java)
+                intent.putExtra(AddTaskActivity.TASK_ID, it.id)
+                startActivityForResult(intent, CREATE_NEW_TASK)
 
             }
             adapter.listenerDelete = {
@@ -43,13 +49,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CREATE_NEW_TASK) {
+        if (requestCode == CREATE_NEW_TASK && resultCode == Activity.RESULT_OK) updateList()
+    }
 
-            binding.tasks.adapter = adapter
-            adapter.submitList(TaskDataSource.getlist())
-
-
-        }
+    private fun updateList() {
+        adapter.submitList(TaskDataSource.getlist())
     }
 
     companion object {

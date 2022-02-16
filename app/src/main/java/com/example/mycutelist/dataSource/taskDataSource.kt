@@ -10,4 +10,8 @@ object TaskDataSource{
     fun insertTask(task: Task){
         list.add(task.copy(id = list.size + 1))
     }
-}
+
+    fun findById(taskId: Int) = list.find { it.id== taskId }
+
+
+    }
