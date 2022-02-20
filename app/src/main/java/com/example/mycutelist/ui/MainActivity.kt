@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.mycutelist.dataSource.TaskDataSource
 import com.example.mycutelist.databinding.ActivityMainBinding
 
@@ -16,12 +18,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private val adapter by lazy {TaskListAdapter()}
 
+    private val register =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) updateList()
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tasks.adapter = adapter
+        binding.rvTasks.adapter = adapter
         updateList()
 
 
@@ -31,18 +38,20 @@ class MainActivity : AppCompatActivity() {
 
         private fun insertListeners(){
             binding.fab.setOnClickListener {
-                startActivityForResult(Intent(this, AddTaskActivity::class.java), CREATE_NEW_TASK)
+                register.launch(Intent(this, AddTaskActivity::class.java))
 
             }
 
             adapter.listenerEdit = {
                val intent = Intent (this, AddTaskActivity::class.java)
                 intent.putExtra(AddTaskActivity.TASK_ID, it.id)
-                startActivityForResult(intent, CREATE_NEW_TASK)
+                register.launch(intent)
+
 
             }
             adapter.listenerDelete = {
-                Log.e(TAG, "listenerDelete:  $it " )
+                TaskDataSource.deleteTask(it)
+                updateList()
 
             }
         }
@@ -53,7 +62,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateList() {
-        adapter.submitList(TaskDataSource.getlist())
+        val list = TaskDataSource.getlist()
+        if(list.isEmpty()) {
+            binding.includeEmpty.emptyState.visibility = View. VISIBLE
+        } else {
+            binding.includeEmpty.emptyState.visibility = View. GONE
+        }
+            adapter.submitList(list)
     }
 
     companion object {

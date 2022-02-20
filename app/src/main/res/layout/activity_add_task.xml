@@ -58,8 +58,7 @@
         app:layout_constraintEnd_toStartOf="@id/hour"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="@id/guide_start"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -82,8 +81,7 @@
         app:startIconDrawable="@drawable/ic_time"
         app:layout_constraintTop_toTopOf="@id/date"
         app:layout_constraintStart_toEndOf="@id/date"
-        app:layout_constraintEnd_toEndOf="@id/guide_end"
-        >
+        app:layout_constraintEnd_toEndOf="@id/guide_end">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

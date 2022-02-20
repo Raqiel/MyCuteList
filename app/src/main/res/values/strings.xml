@@ -4,4 +4,5 @@
     <string name="nova_tarefa">Nova tarefa</string>
     <string name="passear_com_o_cachorro">Passear com o cachorro</string>
     <string name="editar">editar</string>
+    <string name="ops_voc_n_o_tem_n_nenhuma_tarefa">Ops, você não tem \n nenhuma tarefa</string>
 </resources>

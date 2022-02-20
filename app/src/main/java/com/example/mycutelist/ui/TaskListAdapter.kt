@@ -36,9 +36,9 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
         fun bind(item: Task) {
 
 
-                binding.tvTitle.text = item.title
-                binding.date.text = "${item.date} ${item.hour}"
-            binding.tresPontinhos.setOnClickListener{
+            binding.tvTitle.text = item.title
+            binding.date.text = "${item.date} ${item.hour}"
+            binding.tresPontinhos.setOnClickListener {
                 showPopup(item)
             }
 
@@ -47,12 +47,12 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
 
         private fun showPopup(item: Task) {
             val tresPontinhos = binding.tresPontinhos
-            val popupMenu = PopupMenu(tresPontinhos.context,tresPontinhos)
+            val popupMenu = PopupMenu(tresPontinhos.context, tresPontinhos)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
-                        R.id.action_edit -> listenerEdit(item)
-                        R.id.action_delete -> listenerDelete(item)
+                    R.id.action_edit -> listenerEdit(item)
+                    R.id.action_delete -> listenerDelete(item)
                 }
                 return@setOnMenuItemClickListener true
             }
@@ -60,7 +60,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
         }
 
     }
-
+}
 
     class DiffCallBack : DiffUtil.ItemCallback<Task>() {
         override fun areItemsTheSame(oldItem: Task, newItem: Task) = oldItem == newItem
@@ -68,4 +68,4 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
         override fun areContentsTheSame(oldItem: Task, newItem: Task) = oldItem.id == newItem.id
 
     }
-}
+
