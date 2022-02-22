@@ -51,7 +51,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCa
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.action_edit -> listenerEdit(item)
+                    R.id.actionEdit -> listenerEdit(item)
                     R.id.action_delete -> listenerDelete(item)
                 }
                 return@setOnMenuItemClickListener true

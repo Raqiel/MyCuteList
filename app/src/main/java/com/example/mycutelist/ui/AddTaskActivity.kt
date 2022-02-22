@@ -4,7 +4,7 @@ package com.example.mycutelist.ui
 import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mycutelist.dataSource.TaskDataSource
+import br.com.dio.todolist.datasource.TaskDataSource
 import com.example.mycutelist.databinding.ActivityAddTaskBinding
 import com.example.mycutelist.extensions.format
 import com.example.mycutelist.extensions.text
@@ -17,6 +17,7 @@ import java.util.*
 class AddTaskActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddTaskBinding
+    private val adapter by lazy {TaskListAdapter()}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,12 +79,18 @@ class AddTaskActivity : AppCompatActivity() {
                 hour = binding.hour.text,
                 id = intent.getIntExtra(TASK_ID, 0)
             )
-            TaskDataSource.insertTask(task)
+           TaskDataSource.insertTask(task)
 
             setResult(Activity.RESULT_OK)
+
+
+
+
             finish()
 
         }
+
+
 
     }
 
@@ -91,3 +98,6 @@ class AddTaskActivity : AppCompatActivity() {
         const val TASK_ID = "task_id"
     }
 }
+
+
+

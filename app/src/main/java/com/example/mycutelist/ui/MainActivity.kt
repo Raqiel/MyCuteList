@@ -6,11 +6,9 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.mycutelist.dataSource.TaskDataSource
+import br.com.dio.todolist.datasource.TaskDataSource
 import com.example.mycutelist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +32,12 @@ class MainActivity : AppCompatActivity() {
 
 
         insertListeners()
+
     }
+
+
+
+
 
         private fun insertListeners(){
             binding.fab.setOnClickListener {
@@ -45,7 +48,10 @@ class MainActivity : AppCompatActivity() {
             adapter.listenerEdit = {
                val intent = Intent (this, AddTaskActivity::class.java)
                 intent.putExtra(AddTaskActivity.TASK_ID, it.id)
+                intent.putExtra(AddTaskActivity.TASK_ID, it.id)
                 register.launch(intent)
+                adapter.notifyDataSetChanged()
+
 
 
             }
@@ -62,13 +68,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateList() {
-        val list = TaskDataSource.getlist()
-        if(list.isEmpty()) {
-            binding.includeEmpty.emptyState.visibility = View. VISIBLE
-        } else {
-            binding.includeEmpty.emptyState.visibility = View. GONE
+        val list = TaskDataSource.getList()
+
+        if (list.isEmpty()) {
+            binding.includeEmpty.emptyState.visibility = View.VISIBLE
+            binding.rvTasks.visibility = View.GONE
+        }else{
+            binding.includeEmpty.emptyState.visibility = View.GONE
+            binding.rvTasks.visibility = View.VISIBLE
         }
-            adapter.submitList(list)
+
+
+
+
+        adapter.submitList(list)
     }
 
     companion object {
