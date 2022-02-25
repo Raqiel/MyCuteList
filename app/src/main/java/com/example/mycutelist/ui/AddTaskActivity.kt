@@ -3,8 +3,11 @@ package com.example.mycutelist.ui
 
 import android.app.Activity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import br.com.dio.todolist.datasource.TaskDataSource
+import com.example.mycutelist.database.TarefasDataBase
+import com.example.mycutelist.database.salvarTarefa
 import com.example.mycutelist.databinding.ActivityAddTaskBinding
 import com.example.mycutelist.extensions.format
 import com.example.mycutelist.extensions.text
@@ -18,6 +21,7 @@ class AddTaskActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddTaskBinding
     private val adapter by lazy {TaskListAdapter()}
+    private lateinit var dataBase : TarefasDataBase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,8 @@ class AddTaskActivity : AppCompatActivity() {
         }
 
         insertListeners()
+
+        dataBase = TarefasDataBase(this)
 
     }
 
@@ -86,9 +92,21 @@ class AddTaskActivity : AppCompatActivity() {
 
 
 
+
+
+            val idTodo =  dataBase.salvarTarefa(task)
+
+            if (idTodo == -1L) {
+                Toast.makeText(this,"Erro ao inserir tarefa", Toast.LENGTH_SHORT ).show ()
+            } else {
+                Toast.makeText( this, "Tarefa inserida com sucesso", Toast.LENGTH_SHORT).show()
+            }
+
             finish()
 
         }
+
+
 
 
 

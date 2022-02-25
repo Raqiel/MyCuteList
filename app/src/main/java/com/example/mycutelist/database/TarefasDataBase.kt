@@ -23,8 +23,9 @@ class TarefasDataBase(
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
-        db?.execSQL("DROP TABLE IF EXISTS TB_TAREFAS ")
-        onCreate(db)
+       // db?.execSQL("DROP TABLE IF EXISTS TB_TAREFAS ")
+        //onCreate(db)
+
 
     }
 

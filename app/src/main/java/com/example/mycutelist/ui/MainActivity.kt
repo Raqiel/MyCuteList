@@ -9,12 +9,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import br.com.dio.todolist.datasource.TaskDataSource
+import com.example.mycutelist.database.TarefasDataBase
+import com.example.mycutelist.database.listar
 import com.example.mycutelist.databinding.ActivityMainBinding
+import com.example.mycutelist.model.Task
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private val adapter by lazy {TaskListAdapter()}
+    private lateinit var dataBase : TarefasDataBase
 
     private val register =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -23,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        dataBase = TarefasDataBase(this)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -68,7 +73,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateList() {
-        val list = TaskDataSource.getList()
+        val list = dataBase.listar()
 
         if (list.isEmpty()) {
             binding.includeEmpty.emptyState.visibility = View.VISIBLE
@@ -84,8 +89,11 @@ class MainActivity : AppCompatActivity() {
         adapter.submitList(list)
     }
 
+
+
     companion object {
         private const val CREATE_NEW_TASK = 1000
     }
 
 }
+
