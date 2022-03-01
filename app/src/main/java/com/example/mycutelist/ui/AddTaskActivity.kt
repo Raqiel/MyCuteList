@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import br.com.dio.todolist.datasource.TaskDataSource
 import com.example.mycutelist.database.TarefasDataBase
+import com.example.mycutelist.database.editar
 import com.example.mycutelist.database.salvarTarefa
 import com.example.mycutelist.databinding.ActivityAddTaskBinding
 import com.example.mycutelist.extensions.format
@@ -28,7 +29,7 @@ class AddTaskActivity : AppCompatActivity() {
 
 
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
 
         if (intent.hasExtra(TASK_ID)) {
            val taskId = intent.getIntExtra(TASK_ID, 0)
@@ -38,6 +39,7 @@ class AddTaskActivity : AppCompatActivity() {
                 binding.hour.text = it.hour
             }
         }
+        setContentView(binding.root)
 
         insertListeners()
 
@@ -85,22 +87,25 @@ class AddTaskActivity : AppCompatActivity() {
                 hour = binding.hour.text,
                 id = intent.getIntExtra(TASK_ID, 0)
             )
-           TaskDataSource.insertTask(task)
+           //TaskDataSource.insertTask(task)
+
+            if (task.id > 0) {
+                dataBase.editar(task)
+
+
+            }else {
+
+
+                val idTodo = dataBase.salvarTarefa(task)
+
+                if (idTodo == -1L) {
+                    Toast.makeText(this, "Erro ao inserir tarefa", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Tarefa inserida com sucesso", Toast.LENGTH_SHORT).show()
+                }
+            }
 
             setResult(Activity.RESULT_OK)
-
-
-
-
-
-
-            val idTodo =  dataBase.salvarTarefa(task)
-
-            if (idTodo == -1L) {
-                Toast.makeText(this,"Erro ao inserir tarefa", Toast.LENGTH_SHORT ).show ()
-            } else {
-                Toast.makeText( this, "Tarefa inserida com sucesso", Toast.LENGTH_SHORT).show()
-            }
 
             finish()
 

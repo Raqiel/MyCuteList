@@ -1,6 +1,7 @@
 package com.example.mycutelist.ui
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -10,6 +11,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import br.com.dio.todolist.datasource.TaskDataSource
 import com.example.mycutelist.database.TarefasDataBase
+import com.example.mycutelist.database.deletar
 import com.example.mycutelist.database.listar
 import com.example.mycutelist.databinding.ActivityMainBinding
 import com.example.mycutelist.model.Task
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
         private fun insertListeners(){
             binding.fab.setOnClickListener {
                 register.launch(Intent(this, AddTaskActivity::class.java))
@@ -55,13 +58,17 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra(AddTaskActivity.TASK_ID, it.id)
                 intent.putExtra(AddTaskActivity.TASK_ID, it.id)
                 register.launch(intent)
-                adapter.notifyDataSetChanged()
+
 
 
 
             }
             adapter.listenerDelete = {
+                dataBase.deletar(it.id)
+
                 TaskDataSource.deleteTask(it)
+
+
                 updateList()
 
             }
@@ -70,6 +77,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CREATE_NEW_TASK && resultCode == Activity.RESULT_OK) updateList()
+        adapter.notifyDataSetChanged()
     }
 
     private fun updateList() {
@@ -87,6 +95,7 @@ class MainActivity : AppCompatActivity() {
 
 
         adapter.submitList(list)
+        adapter.notifyDataSetChanged()
     }
 
 

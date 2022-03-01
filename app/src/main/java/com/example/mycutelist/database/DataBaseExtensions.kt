@@ -2,6 +2,8 @@ package com.example.mycutelist.database
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.LocusId
+import androidx.core.content.contentValuesOf
 import com.example.mycutelist.model.Task
 
 fun TarefasDataBase.salvarTarefa(item: Task): Long {
@@ -17,6 +19,10 @@ fun TarefasDataBase.salvarTarefa(item: Task): Long {
 
 
 }
+
+
+
+
 
 @SuppressLint("Range")
 fun TarefasDataBase.listar() : List<Task> {
@@ -38,8 +44,6 @@ fun TarefasDataBase.listar() : List<Task> {
                     )
 
             taskList.add(tarefas)
-
-
         }
 
         cursor.close()
@@ -47,3 +51,19 @@ fun TarefasDataBase.listar() : List<Task> {
 
     return  taskList
 }
+
+
+fun TarefasDataBase.deletar(id: Int) {
+    writableDatabase.delete("TB_TAREFAS", "ID=?",Array<String>(1) {"$id"})
+
+}
+
+fun TarefasDataBase.editar(task: Task) {
+    val id = task.id
+    val values = ContentValues ()
+    values.put("NOME",task.title)
+    values.put("DATA",task.date)
+    values.put("HORA",task.hour)
+    writableDatabase.update("TB_TAREFAS", values, "ID=?" , Array<String>(1) {"$id"})
+}
+
